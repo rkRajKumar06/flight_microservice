@@ -54,9 +54,7 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> claims = new HashMap<>();
 
         // find data from db and put in token
-        claims.put("role", "guest");
-        claims.put("country", "Japan");
-        claims.put("language", "japanese");
+        claims.put("role", "user");
 
 
 		return doGenerateToken(claims, userDetails.getUsername());

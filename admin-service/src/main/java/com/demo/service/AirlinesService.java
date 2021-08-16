@@ -15,19 +15,28 @@ public class AirlinesService {
 	@Autowired
 	private AirlinesRepository repository;
 	
+	@Autowired
+	private FlightDetailsService detailsService;
+	
 	public List<Airlines> getAllAirlines(){
 		return repository.findAll();
+	}
+	
+	public Optional<Airlines> findById(int id) {
+		return repository.findById(id);
 	}
 	
 	public Airlines saveAirlines(Airlines entity) {
 		return repository.save(entity);
 	}
 	
-	public Airlines updateAirlines(int id, Airlines entity) {
+	public Airlines updateAirlinesStatus(int id, Airlines entity) {
 		Optional<Airlines> obj = repository.findById(id);
+		System.out.println(" Airlines "+id);
 		if(obj.isPresent()) {
-			entity.setId(id);
-			return repository.save(entity);
+			obj.get().setBlocked(entity.isBlocked());
+			detailsService.updateFlightStatus(entity.isBlocked(), id);
+			return repository.save(obj.get());
 		}else {
 			throw new AdminServiceException();
 		}

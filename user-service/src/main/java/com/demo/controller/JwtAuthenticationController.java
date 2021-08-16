@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.demo.config.JwtTokenUtil;
 import com.demo.model.JwtRequest;
 import com.demo.model.JwtResponse;
+import com.demo.model.UserEntity;
 import com.demo.service.JwtUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,14 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		String role = userDetailsService.getRole(authenticationRequest.getUsername());
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(token, role));
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> saveUser(@RequestBody UserEntity user) throws Exception {
+		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

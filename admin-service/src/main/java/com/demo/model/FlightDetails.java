@@ -1,31 +1,23 @@
 package com.demo.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "flight_details")
 public class FlightDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    private Airlines airlines; //Reference to Airlines Foreign Key
+    private int airlines; //Reference to Airlines Foreign Key
     private String flightNo;
     private int businessClassSeats;
     private int economyClassSeats;
     private boolean blocked=false;
-    
-    @OneToMany(mappedBy = "flightDetails")
-    private List<FlightSchedule> flightSchedules;
     
 	public int getId() {
 		return id;
@@ -33,10 +25,10 @@ public class FlightDetails{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Airlines getAirlines() {
+	public int getAirlines() {
 		return airlines;
 	}
-	public void setAirlines(Airlines airlines) {
+	public void setAirlines(int airlines) {
 		this.airlines = airlines;
 	}
 	public String getFlightNo() {
@@ -63,4 +55,12 @@ public class FlightDetails{
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
 	}
+	@Override
+	public String toString() {
+		return "FlightDetails [id=" + id + ", airlines=" + airlines + ", flightNo=" + flightNo + ", businessClassSeats="
+				+ businessClassSeats + ", economyClassSeats=" + economyClassSeats + ", blocked=" + blocked
+				+ "]";
+	}
+	
+	
 }

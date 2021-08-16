@@ -30,9 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		// configure AuthenticationManager so that it knows from where to load
@@ -40,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Use BCryptPasswordEncoder
 		// auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 		// auth.userDetailsService(jwtUserDetailsService);
-		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
+		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 
@@ -60,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate", "/api/v1/hello").permitAll().
+				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
@@ -71,4 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
+	
 }

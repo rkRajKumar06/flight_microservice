@@ -2,21 +2,19 @@ package com.demo.model;
 
 import java.time.LocalTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "flight_schedule")
 public class FlightSchedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-	@ManyToOne(cascade = CascadeType.ALL)
-    private FlightDetails flightDetails; //Reference to FlightDetails FK
+    private int flightDetails; //Reference to FlightDetails FK
     private String fromPlace;
     private String toPlace;
     private LocalTime departureTime;
@@ -35,10 +33,10 @@ public class FlightSchedule {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public FlightDetails getFlightDetails() {
+	public int getFlightDetails() {
 		return flightDetails;
 	}
-	public void setFlightDetails(FlightDetails flightDetails) {
+	public void setFlightDetails(int flightDetails) {
 		this.flightDetails = flightDetails;
 	}
 	public String getFromPlace() {

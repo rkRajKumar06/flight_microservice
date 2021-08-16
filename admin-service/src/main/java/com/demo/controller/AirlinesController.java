@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.model.Airlines;
 import com.demo.service.AirlinesService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/airlines")
 public class AirlinesController {
@@ -36,8 +34,8 @@ public class AirlinesController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Airlines> saveAirlines(@PathVariable int id, @RequestBody Airlines entity){
-		return new ResponseEntity<Airlines>(airlinesService.updateAirlines(id, entity), HttpStatus.OK);
+	public ResponseEntity<Airlines> updateAirlinesStatus(@PathVariable int id, @RequestBody Airlines entity){
+		return new ResponseEntity<Airlines>(airlinesService.updateAirlinesStatus(id, entity), HttpStatus.OK);
 	}
 	
 }
