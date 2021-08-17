@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.model.Airlines;
+import com.demo.model.FlightDetails;
 import com.demo.repository.AirlinesRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class AirlinesService {
 	
 	@Autowired
 	private FlightDetailsService detailsService;
+	
+	@Autowired
+	private FlightScheduleService scheduleService;
 	
 	public List<Airlines> getAllAirlines(){
 		return repository.findAll();
@@ -36,6 +40,12 @@ public class AirlinesService {
 		if(obj.isPresent()) {
 			obj.get().setBlocked(entity.isBlocked());
 			detailsService.updateFlightStatus(entity.isBlocked(), id);
+			List<FlightDetails> dataList = detailsService.findAllFlightDetailsBasedOnAirlinesId(id);
+			if(dataList!=null && !dataList.isEmpty()) {
+				for(FlightDetails flightObj : dataList) {
+					scheduleService.updateTheStatus(entity.isBlocked(), flightObj.getId());
+				}
+			}
 			return repository.save(obj.get());
 		}else {
 			throw new AdminServiceException();

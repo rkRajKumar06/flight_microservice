@@ -29,6 +29,12 @@ public class CouponsController {
 		return new ResponseEntity<List<Coupons>>(couponsService.getAllCoupons(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/active")
+	public ResponseEntity<List<Coupons>> getAllActiveCoupons(){
+		System.out.println(" --backend sec call--- ");
+		return new ResponseEntity<List<Coupons>>(couponsService.findAllActiveCoupons(), HttpStatus.OK);
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<Coupons> saveCoupons(@RequestBody Coupons coupons){
 		return new ResponseEntity<Coupons>(couponsService.saveCoupon(coupons), HttpStatus.OK);

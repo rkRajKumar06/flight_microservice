@@ -45,7 +45,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Optional<UserEntity> user = Optional.ofNullable(service.getUserByName(username));
 		String roles = user.get().getRole();
 		return roles;
-
+	}
+    
+    public String getEmail(String username) {
+		Optional<UserEntity> user = Optional.ofNullable(service.getUserByName(username));
+		String email = user.get().getEmail();
+		return email;
 	}
     
     public UserEntity save(UserEntity user) {

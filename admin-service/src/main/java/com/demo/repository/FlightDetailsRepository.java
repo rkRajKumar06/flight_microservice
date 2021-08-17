@@ -18,4 +18,6 @@ public interface FlightDetailsRepository extends JpaRepository<FlightDetails, In
 	@Modifying
 	@Transactional
 	void updateFlightStatus(boolean value, int id);
+	
+	List<FlightDetails> findByAirlines(int airlines);
 }

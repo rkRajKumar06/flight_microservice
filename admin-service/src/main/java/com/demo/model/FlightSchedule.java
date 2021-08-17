@@ -21,8 +21,8 @@ public class FlightSchedule {
     private LocalTime arrivalTime;
     private double price;
     private String day;
-    private boolean nonVeg=false;
-    private boolean veg=false;
+    private boolean nonVeg=true;
+    private boolean veg=true;
     private int availableBusinessClassSeats;
     private int availableEconomyClassSeats;
     private boolean blocked=false;

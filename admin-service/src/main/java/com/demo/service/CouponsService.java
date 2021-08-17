@@ -19,6 +19,10 @@ public class CouponsService {
 		return repository.findAll();
 	}
 	
+	public List<Coupons> findAllActiveCoupons(){
+		return repository.findByInactive(false);
+	}
+	
 	public Coupons saveCoupon(Coupons coupons) {
 		return repository.save(coupons);
 	}

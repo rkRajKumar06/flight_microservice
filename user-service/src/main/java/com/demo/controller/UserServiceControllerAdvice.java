@@ -5,14 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.demo.service.AdminServiceException;
+import com.demo.service.UserServiceException;
 
 @ControllerAdvice
-public class AdminControllerAdvice {
-
-	@ExceptionHandler(AdminServiceException.class)
-	public final ResponseEntity<String> handleException(AdminServiceException exception){
+public class UserServiceControllerAdvice {
+	
+	@ExceptionHandler(UserServiceException.class)
+	public ResponseEntity<String> handleUserServiceException(UserServiceException exception){
 		return new ResponseEntity<String>("Exception Occurred", HttpStatus.BAD_REQUEST);
 	}
-	
 }
