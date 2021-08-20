@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.model.BookedSeats;
 import com.demo.model.FlightSchedule;
 import com.demo.service.AdminServiceException;
 import com.demo.service.FlightScheduleService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/schedule")
@@ -55,6 +59,22 @@ public class FlightScheduleController {
 	public ResponseEntity<FlightSchedule> updateFlightScheduleStatus(@PathVariable boolean value, @PathVariable int flightId){
 		scheduleService.updateTheStatus(value, flightId);
 		return new ResponseEntity<FlightSchedule>(HttpStatus.OK);
+	}
+	
+	@KafkaListener(topics = "UpdateAvailableSeats", groupId = "group_id", containerFactory = "userKafkaListenerFactory")
+	public void consumeJson(BookedSeats bookedSeats) throws JsonProcessingException {
+		System.out.println(" result "+new ObjectMapper().writeValueAsString(bookedSeats));
+		
+		// need to update the data.
+		Optional<FlightSchedule> result = scheduleService.findAllFlightScheduleBasedOnId(bookedSeats.getScheduleID());
+		if(result.isPresent()) {
+			if(bookedSeats.getClasstype().equalsIgnoreCase("business")) {
+				result.get().setAvailableBusinessClassSeats(result.get().getAvailableBusinessClassSeats() - bookedSeats.getBookedSeats());
+			}else if(bookedSeats.getClasstype().equalsIgnoreCase("economy")) {
+				result.get().setAvailableEconomyClassSeats(result.get().getAvailableEconomyClassSeats() - bookedSeats.getBookedSeats());
+			}
+			scheduleService.updateFlightScheduleAvailableSeats(result.get());
+		}
 	}
 	
 	@GetMapping("/search") //  for round trip we have to call this two times.

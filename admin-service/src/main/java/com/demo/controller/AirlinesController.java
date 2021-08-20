@@ -3,6 +3,8 @@ package com.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +26,19 @@ public class AirlinesController {
 	private AirlinesService airlinesService;
 	
 	@GetMapping("")
+	@Cacheable(value = "airlines")
 	public ResponseEntity<List<Airlines>> getAllAirlines(){
 		return new ResponseEntity<List<Airlines>>(airlinesService.getAllAirlines(), HttpStatus.OK);
 	}
 	
 	@PostMapping("")
+	@CacheEvict(value = "airlines", allEntries = true)
 	public ResponseEntity<Airlines> saveAirlines(@RequestBody Airlines entity){
 		return new ResponseEntity<Airlines>(airlinesService.saveAirlines(entity), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
+	@CacheEvict(value = "coupons", allEntries = true)
 	public ResponseEntity<Airlines> updateAirlinesStatus(@PathVariable int id, @RequestBody Airlines entity){
 		return new ResponseEntity<Airlines>(airlinesService.updateAirlinesStatus(id, entity), HttpStatus.OK);
 	}

@@ -14,6 +14,7 @@ public class FlightSchedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+	private int airlineId;
     private int flightDetails; //Reference to FlightDetails FK
     private String fromPlace;
     private String toPlace;
@@ -104,6 +105,12 @@ public class FlightSchedule {
 	}
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
+	}
+	public int getAirlineId() {
+		return airlineId;
+	}
+	public void setAirlineId(int airlineId) {
+		this.airlineId = airlineId;
 	}
     
 }

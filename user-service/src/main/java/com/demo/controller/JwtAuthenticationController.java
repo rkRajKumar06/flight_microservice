@@ -1,13 +1,5 @@
 package com.demo.controller;
 
-import java.util.Objects;
-
-import com.demo.config.JwtTokenUtil;
-import com.demo.model.JwtRequest;
-import com.demo.model.JwtResponse;
-import com.demo.model.UserEntity;
-import com.demo.service.JwtUserDetailsService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.config.JwtTokenUtil;
+import com.demo.model.JwtRequest;
+import com.demo.model.JwtResponse;
+import com.demo.model.UserEntity;
+import com.demo.service.JwtUserDetailsService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
@@ -44,10 +42,10 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		String role = userDetailsService.getRole(authenticationRequest.getUsername());
-		String email = userDetailsService.getEmail(authenticationRequest.getUsername());
-
-		return ResponseEntity.ok(new JwtResponse(token, role, email));
+//		String role = userDetailsService.getRole(authenticationRequest.getUsername());
+//		String email = userDetailsService.getEmail(authenticationRequest.getUsername());
+		System.out.println("-------- authenticate request ----");
+		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

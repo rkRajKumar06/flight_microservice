@@ -1,7 +1,6 @@
 package com.demo.service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +43,10 @@ public class FlightScheduleService {
 		}else {
 			throw new AdminServiceException();
 		}
+	}
+	
+	public void updateFlightScheduleAvailableSeats(FlightSchedule entity) {
+		repository.save(entity);
 	}
 	
 	public void updateTheStatus(boolean value, int id) {

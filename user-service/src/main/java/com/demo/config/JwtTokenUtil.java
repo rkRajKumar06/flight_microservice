@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.demo.model.UserEntity;
+import com.demo.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +27,9 @@ public class JwtTokenUtil implements Serializable {
 
 	@Value("${jwt.secret}")
 	private String secret;
+	
+	@Autowired
+	private JwtUserDetailsService service;
 
 	//retrieve username from jwt token
 	public String getUsernameFromToken(String token) {
@@ -54,8 +61,10 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> claims = new HashMap<>();
 
         // find data from db and put in token
-        claims.put("role", "user");
-
+		UserEntity entity = service.getUserObject(userDetails.getUsername());
+		claims.put("email", entity.getEmail());
+        claims.put("role", entity.getRole());
+        claims.put("name", entity.getName());
 
 		return doGenerateToken(claims, userDetails.getUsername());
 	}

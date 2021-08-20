@@ -1,7 +1,6 @@
 package com.demo.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,14 +17,18 @@ public class BookingDetails{
     private String pnr;
     private int flightDetails1; //Reference to FlightDetails 1 for oneway trip
     private int flightDetails2; //Reference to FlightDetails 1 for round trip
+    private int flightSchedule1;
+    private int flightSchedule2;
     private int noOfPersons;
     private double amount;  // to store with out discount
     private double totalAmount;
     private LocalDate departureDate;
-    private LocalDate arrivalDate;
+    private LocalDate returnDate;
     private String email;
     private String fromPlace;
     private String toPlace;
+    private int couponId;
+    private String seatClass;
     @OneToMany
     private List<Passengers> passengerList;  // Reference to Passengers List FK
     private boolean cancelled=false;
@@ -78,12 +81,6 @@ public class BookingDetails{
 	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
-	public void setArrivalDate(LocalDate arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -113,5 +110,35 @@ public class BookingDetails{
 	}
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+	public int getCouponId() {
+		return couponId;
+	}
+	public void setCouponId(int couponId) {
+		this.couponId = couponId;
+	}
+	public LocalDate getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(LocalDate returnDate) {
+		this.returnDate = returnDate;
+	}
+	public String getSeatClass() {
+		return seatClass;
+	}
+	public void setSeatClass(String seatClass) {
+		this.seatClass = seatClass;
+	}
+	public int getFlightSchedule1() {
+		return flightSchedule1;
+	}
+	public void setFlightSchedule1(int flightSchedule1) {
+		this.flightSchedule1 = flightSchedule1;
+	}
+	public int getFlightSchedule2() {
+		return flightSchedule2;
+	}
+	public void setFlightSchedule2(int flightSchedule2) {
+		this.flightSchedule2 = flightSchedule2;
 	}
 }
