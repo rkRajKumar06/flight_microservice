@@ -35,7 +35,7 @@ public class BookingDetailsService {
 	}
 	
 	public BookingDetails saveBookingDetails(BookingDetails details) {
-		passengersRepository.saveAllAndFlush(details.getPassengerList());
+		details.setPassengerList(passengersRepository.saveAllAndFlush(details.getPassengerList()));
 		return repository.save(details);
 	}
 	

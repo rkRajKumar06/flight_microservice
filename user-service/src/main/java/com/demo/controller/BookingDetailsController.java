@@ -21,7 +21,7 @@ import com.demo.model.BookingDetails;
 import com.demo.service.BookingDetailsService;
 import com.demo.service.UserServiceException;
 
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin
 @RestController
 @RequestMapping("/bookingDetails")
 public class BookingDetailsController {

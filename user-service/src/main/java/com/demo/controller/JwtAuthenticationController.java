@@ -21,7 +21,7 @@ import com.demo.model.UserEntity;
 import com.demo.service.JwtUserDetailsService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*")
 public class JwtAuthenticationController {
 
 	@Autowired

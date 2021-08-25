@@ -27,16 +27,17 @@ public class AdminServiceApplication {
 		SpringApplication.run(AdminServiceApplication.class, args);
 	}
 
-	@Bean
-	public FilterRegistrationBean<Filter> corsFilter() {
-	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    final CorsConfiguration config = new CorsConfiguration();
-	    config.setAllowCredentials(true);
-	    config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-	    config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
-	    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
-	    source.registerCorsConfiguration("/**", config);
-	    FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>(new CorsFilter(source));
-	    return registration;
-	}
+	/*
+	 * @Bean public FilterRegistrationBean<Filter> corsFilter() { final
+	 * UrlBasedCorsConfigurationSource source = new
+	 * UrlBasedCorsConfigurationSource(); final CorsConfiguration config = new
+	 * CorsConfiguration(); config.setAllowCredentials(true);
+	 * config.setAllowedOrigins(Collections.singletonList("*"));
+	 * config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
+	 * config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS",
+	 * "DELETE", "PATCH")); source.registerCorsConfiguration("/**", config);
+	 * FilterRegistrationBean<Filter> registration = new
+	 * FilterRegistrationBean<Filter>(new CorsFilter(source)); return registration;
+	 * }
+	 */
 }

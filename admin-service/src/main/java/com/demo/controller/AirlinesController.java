@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.model.Airlines;
 import com.demo.service.AirlinesService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/airlines")
 public class AirlinesController {
@@ -38,7 +40,7 @@ public class AirlinesController {
 	}
 	
 	@PutMapping("/{id}")
-	@CacheEvict(value = "coupons", allEntries = true)
+	@CacheEvict(value = "airlines", allEntries = true)
 	public ResponseEntity<Airlines> updateAirlinesStatus(@PathVariable int id, @RequestBody Airlines entity){
 		return new ResponseEntity<Airlines>(airlinesService.updateAirlinesStatus(id, entity), HttpStatus.OK);
 	}
